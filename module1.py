@@ -89,7 +89,7 @@ class name:
                    "### END INIT INFO\t")
         file.close()
         Popen(["sudo", "chmod", "+x", "namnsdag.sh"])
-        Popen(["cp", "time.sh", "/etc/init.d/namnsdag.sh"])
+        Popen(["cp", "namnsdag.sh", "/etc/init.d/namnsdag.sh"])
         Popen(["chmod", "+x", "/etc/init.d/namnsdag.sh"])
 
         #this creates the sh file..
