@@ -4,104 +4,101 @@ from subprocess import Popen as Popen
 from subprocess import check_output as check_output
 
 
-
 class name:
-    
+
     def __init__(self):
         my_url = "https://sholiday.faboul.se/dagar/v2.1/"
         self.my_url = my_url
 
-    
     def answer_to_json_dict(self, my_url):
-        #had to do this in one step.
-        #defaults to faboul for convinience
-        my_url=self.my_url
-        fabol_answer=RQ.api.get(my_url)
-        my_dict=fabol_answer.json()
+        # had to do this in one step.
+        # defaults to faboul for convinience
+        my_url = self.my_url
+        fabol_answer = RQ.api.get(my_url)
+        my_dict = fabol_answer.json()
         return my_dict
 
     def to_dict(self, my_dict):
-        #because this is a nested flat dict thingy
-        days=my_dict['dagar']
-        days_dict=days[0]
+        # because this is a nested flat dict thingy
+        days = my_dict['dagar']
+        days_dict = days[0]
         return days_dict
 
-    def get_namnsdag(self, days_dict): 
-        names=days_dict.get('namnsdag')
+    def get_namnsdag(self, days_dict):
+        names = days_dict.get('namnsdag')
         return names
-    
-    def get_date(self, days_dict):   
-        date=days_dict.get('datum')
+
+    def get_date(self, days_dict):
+        date = days_dict.get('datum')
         return date
-    
+
     def save_to_file(self, name_day, date):
-        file=open('names.txt', 'a+')
-        file.write(date +" Dagens namn: ")
+        file = open('names.txt', 'a+')
+        file.write(date + " Dagens namn: ")
         for i in range(len(name_day)):
-            if i!=len(name_day)-1:
+            if i != len(name_day)-1:
                 file.write(name_day[i] + ", ")
         else:
-            file.write(name_day[i] +".")
+            file.write(name_day[i] + ".")
         file.write("\n")
         print("done writing to file")
 
     def create_init_script(self):
-        file=open('namnsdag.sh', 'w+')
+        file = open('namnsdag.sh', 'w+')
         file.write("#!/usr/bin/bash \n"
-        "### BEGIN INIT INFO + \n"
-        "# Provides:          namnsdag service \n"
-        "# Required-Start: \n"
-        "# Required-Stop:     $local_fs \n" 
-        "# Default-Start:     2 3 4 5 \n"
-        "# Default-Stop:      0 1 6 \n"
-        "# Short-Description: namnsdag service \n"
-        "# Description:       namnsdag service \n"
-        "### END INIT INFO\t") 
+                   "### BEGIN INIT INFO + \n"
+                   "# Provides:          namnsdag service \n"
+                   "# Required-Start: \n"
+                   "# Required-Stop:     $local_fs \n"
+                   "# Default-Start:     2 3 4 5 \n"
+                   "# Default-Stop:      0 1 6 \n"
+                   "# Short-Description: namnsdag service \n"
+                   "# Description:       namnsdag service \n"
+                   "### END INIT INFO\t")
         file.close()
-        Popen(["sudo","chmod", "+x", "namnsdag.sh"])
+        Popen(["sudo", "chmod", "+x", "namnsdag.sh"])
         Popen(["cp", "time.sh", "/etc/init.d/namnsdag.sh"])
         Popen(["chmod", "+x", "/etc/init.d/namnsdag.sh"])
 
     def create_systemd_service(self):
-        #creates a sh file and stuff
+        # creates a sh file and stuff
         pwd_binary = check_output(["pwd"], shell=True)
-        pwd=pwd_binary.decode()
+        pwd = pwd_binary.decode()
+        pwd_str = pwd.strip("\n")
         print(pwd)
-        whole_pwd=pwd+"/__main__.py"
-        print(whole_pwd)
-        file=open('namnsdag.sh', 'w+')
-        file.write("#!/usr/bin/bash " +"\n" +whole_pwd)
-        file.close()
-        Popen(["sudo","chmod", "+x", "namnsdag.sh"])
+        whole_pwd = pwd_str + "/main.py"
+        bash_str = "#!/bin/bash"
+        file99 = open('namnsdag.sh', 'w+')
+        file99.write(f"{bash_str} \n  {whole_pwd}")
+        file99.close()
+        Popen(["sudo", "chmod", "+x", "namnsdag.sh"])
         Popen(["cp", "namnsdag.sh", "/usr/bin/namnsdag.sh"])
-        Popen(["sudo","chmod", "+x", "/usr/bin/namnsdag.sh"])
-        file1=open('namnsdag.service', 'w+')
+        Popen(["sudo", "chmod", "+x", "/usr/bin/namnsdag.sh"])
+        file1 = open('namnsdag.service', 'w+')
         file1.write("[Unit]\n"
-        "Description=Namnsdag Service \n"
-        "After=network.target \n"
-        "StartLimitIntervalSec=0\n"
-        "[Service] \n"
-        "Type=simple \n"
-        "Restart=always\n"
-        "RestartSec=1\n"
-        "User=root \n"
-        "ExecStartPre= \n"
-        "ExecStart=/usr/bin/namnsdag.sh \n"
-        "ExecStartPost= \n"
-        "ExecStop= \n"
-        "ExecReload= \n"
-        "[Install] \n"
-        "WantedBy=multi-user.target \t")
-        file1.close() 
+                    "Description=Namnsdag Service \n"
+                    "After=network.target \n"
+                    "StartLimitIntervalSec=0\n"
+                    "[Service] \n"
+                    "Type=simple \n"
+                    "Restart=always\n"
+                    "RestartSec=1\n"
+                    "User=root \n"
+                    "ExecStartPre= \n"
+                    "ExecStart=/usr/bin/namnsdag.sh \n"
+                    "ExecStartPost= \n"
+                    "ExecStop= \n"
+                    "ExecReload= \n"
+                    "[Install] \n"
+                    "WantedBy=multi-user.target \t")
+        file1.close()
         Popen(["cp", "namnsdag.service", "/etc/systemd/system/namnsdag.service"])
-       
-        
 
-        Popen(["systemctl", "start" ,"namnsdag.service"])
+        Popen(["systemctl", "start", "namnsdag.service"])
 
 
-"""logg
-
+"""logg days before played with https://github.com/jonnyVarn/time and had christmas 
+2020-12-26 started with this assignment perhaps I should have done this before.
 https://github.com/jonnyVarn/name_day/
 2020-12-27 created repo from github webpage
 2020-12-27 created and added  __init__.py git add __init__.py git commit -m "added __init__.py" git push
@@ -209,5 +206,5 @@ remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To https://github.com/jonnyVarn/name_day
    4f645f0..16ae616  main -> main
    perhaps i missed some stuff..
-   
+
 """
