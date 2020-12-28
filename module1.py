@@ -26,27 +26,32 @@ class name:
         return days_dict
 
     def get_namnsdag(self, days_dict):
+        #haha got my namnsdag
         names = days_dict.get('namnsdag')
         return names
 
     def get_date(self, days_dict):
+        #took the date to perhaps i will need it
         date = days_dict.get('datum')
         return date
     
     def systemctl_reload(self):
+        #this was kind of boring to do lots of times when I change in unit-files
         Popen(["systemctl" ,"daemon-reload"])
 
     def save_to_file(self, name_day, date):
         
         try:
+            #well not much to say try to open names 
             file_test=open('names.txt')
             test=str(file_test.readlines)
             print(test)
-
+            #if the names.txt does not contain the current date
             if not test.find(date)==-1:
-                file = open('names.txt', 'a+')
-                file.write(date + " Dagens namn: ")
-                for i in range(len(name_day)):
+                file = open('names.txt', 'a+') #open in append+ mode..
+                file.write(date + " Dagens namn: ")  #write date and namsdag..
+                #this is just to end with a . or , nothing more..
+                for i in range(len(name_day)):   
                     if i != len(name_day)-1:
                         file.write(name_day[i] + ", ")
                     else:
@@ -55,8 +60,9 @@ class name:
                 print("done writing to file")
             else:
                 print("did not write will sleep for a while")
-                sleep(60) 
+                sleep(60) #could have used more but..this is nothing usefull anyway
         except:
+            #well the file is not there yet so no risk in writing the name again..
             print("the file is not ready yet so I guess its ok")
             file = open('names.txt', 'a+')
             file.write(date + " Dagens namn: ")
@@ -68,7 +74,7 @@ class name:
             file.write("\n")
             print("done writing to file")
             
-
+        #this kind of creates a init script have not tested..
     def create_init_script(self):
         file = open('namnsdag.sh', 'w+')
         file.write("#!/usr/bin/bash \n"
@@ -86,6 +92,7 @@ class name:
         Popen(["cp", "time.sh", "/etc/init.d/namnsdag.sh"])
         Popen(["chmod", "+x", "/etc/init.d/namnsdag.sh"])
 
+        #this creates the sh file..
     def create_namnsdag_sh(self):
         #this should use the "main2.py"
         # creates a sh file and stuff
@@ -100,12 +107,13 @@ class name:
         file99.close()
         Popen(["sudo", "chmod", "+x", "main2.py"])
 
+        #this copies.. 
     def copy_namnsdag_sh(self): 
         Popen(["sudo", "chmod", "+x", "namnsdag.sh"])
         Popen(["cp", "namnsdag.sh", "/usr/bin/namnsdag.sh"])
         Popen(["sudo", "chmod", "+x", "/usr/bin/namnsdag.sh"])
     
-
+        #this create a unit-file.. fun
     def create_namnsdag_service(self):
         file1 = open('namnsdag.service', 'w+')
         file1.write("[Unit]\n"
@@ -130,9 +138,11 @@ class name:
         Popen(["systemctl", "start", "namnsdag.service"])
 
 
-"""logg days before played with https://github.com/jonnyVarn/time and had christmas 
-2020-12-26 started with this assignment perhaps I should have done this before.
-https://github.com/jonnyVarn/name_day/
+"""logg days before played with https://github.com/jonnyVarn/time and had christmas leave. 
+2020-12-26 started with this assignment perhaps I should have done this before,
+but It was hard to descide but here it is. https://github.com/jonnyVarn/name_day/
+almost sort of working sleeps one hour if finds the current date.
+
 2020-12-27 created repo from github webpage
 2020-12-27 created and added  __init__.py git add __init__.py git commit -m "added __init__.py" git push
 2020-12-27 added file namesday.py 
@@ -248,6 +258,7 @@ namnsdag.service - Namnsdag Service
  Main PID: 31070 (code=exited, status=0/SUCCESS)
  added main2 because i created and edited the same files ;) I'm to tired.
  It will be a fun day today.
+ 
 
 
 """
