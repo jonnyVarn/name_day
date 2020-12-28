@@ -286,5 +286,39 @@ remote: Resolving deltas: 100% (12/12), done.
 To https://github.com/jonnyVarn/name_day
  + 7a1752b...f830fd4 main -> main (forced update)
 
-
+copy paste från förra 
+Jag använder mig av VIM med plugin airline, justify, matchit, powerline och python-jedi för att få en trevlig utvecklingsmiljö med autokomplettering och lite finare vim.                
+Jag använder mig av VIM eftersom jag sitter på en Linux konsol via ssh.
+Jag hade använt en annan terminalbaserad kanske emacs eftersom jag valt att inte köra grafiskt. Om jag hade kört grafiskt så hade jag antagligen kört visualstudiocode, pycharm, atom eller någon annan IDE.
+Jag valde filhanterare eftersom den låg på först och verkade vara den mest användbara applikationen. 
+Filhanteraren började växa och utvecklades till Linux-terminal-helper när jag tänkte att den skulle kunna vara lite stöd för andra när de jobbar i Linux/Unix möjligtvis finns det en  en framtid i windows i terminalmiljö.  
+Linux är ju egentligen en Kärna Linux/GNU är ett operativsystem och det finns många olika varianter av GNU/Linux några av de största listas nedan.
+RHEL eller RedhatEnterprise där även Linus Torvalds huserar med community drivna varianter som Centos.
+Debian med varianter som Ubuntu som nästan har gått om Debian i antal användare.
+Suse Enterprise Linux som från början startade i Tyskland ursprungligen från Slackware Linux.
+Det alla Linux varianter delar är som sagt Linux kärnan.
+I alla Linux varianter kan man installera .tgz paket eller så kallade tar bollar.
+Enklast kan vara att dela upp Linux i vilken pakethanterare de använder för att lättare se släktskapet.
+RHEL och Centos är i princip samma Os förutom enterprise supporten och de använder sig av pakhethanteraren yum som kom ifrån yellowdog-linux som var det enda linux som fungerade för mac powerpc på den tiden det begav sig. 
+En lite mer krånglig variant är rpm RedhatPacketManager där man själv får hålla ordning på vilka dependencies som behövs.
+Debian, ubuntu, ubuntu mate etc använder sig av pakethanteraren apt. Eller den lite krångligare varianten där man får använda sig av dependencies själv dpkg
+i
+Av de som står själva förtjänar Alpine linux att nämnas ett minimalt komplett Linux/GNU som från början var avsett att användas på accesspunkter och mindre inbyggda enheter.
+Vad finns det för användningsområden inom Linux?
+Användningsområden inom Linux är oändliga men för att ge några exempel kan man tala om olika typer av servrar exempelvis DHCP-server.
+Det finns olika styrdatorer.
+Jag skulle ju klassificera Android som en Linux kärna så telefoner är ju ett annat område där vi använder Linux.
+Beskriv hur ni använt er av Linux i denna applikation
+Jag har utvecklat min applikation på antix linux (ett debian derrivat med init istället för systemd)
+Jag har använt Vim och kört den ifrån en Linux terminal, jag har även testat applikationen på ubuntu och en openbsd, vilket inte är linux.
+Beskriv de olika tjänster ni känner till som finns i Linux
+Ja eftersom en tjänst är ett program som körs i bakgrunden så blir ju svaret nästan oändligt.
+Jag väljer att lista några av de vanligaste.
+Brandväggar firewalld, ufw, ip-tables. Dessa är tjänster som kan kontrollera vilka TCP/UDP portar som är öppna in eller ut på Linux.
+FTP File Transfer Protocol som erbjuder fildelning. Det finns såklart en uppsjö utav FTP varianter.
+ Cron/cronnyd etc är en tjänst som startar tjänster efter tid.
+ Cups erbjuder delning av skrivare och skrivartjänster.
+ Ntp är NetworkTimeProtocol och erbjuder tidssynkronisering.
+ Systemlog tjänster som loggar händelser på systemet. några exempel är syslog-ng och rsyslog.
+ SSH secureShell bjuder möjlighet att logga in på en dator via TCP/IP och är ersättaren till det mindre säkrare Telnet. Det ju många olika varianter av ssh servrar men min favorit kommer från en av mina favorit operativsystem openbsd och heter openssh.
 """
