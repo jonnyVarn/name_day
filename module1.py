@@ -184,6 +184,30 @@ cat /usr/bin/namnsdag.sh
 /home/jw/name
 "python3 __main__.py
 not as it should..
-
-
+still not working but doing some git anyway..
+git config --global user.email "darth.vader@rymdimperiet.nu"
+jw@josefs-MacBookPro:~/name_day$ git add __main__.py
+jw@josefs-MacBookPro:~/name_day$ git commit -m "changed a bit"
+[main 4f645f0] changed a bit
+ 2 files changed, 203 insertions(+)
+ mode change 100644 => 100755 __main__.py
+ create mode 100644 module1.py
+  git rm namesday.py
+git commit -m "removed namesday.py"
+[main 16ae616] removed namesday.py
+ 1 file changed, 65 deletions(-)
+ delete mode 100644 namesday.py
+ git push
+Username for 'https://github.com': jonnyvarn
+Password for 'https://jonnyvarn@github.com':
+Räknar objekt: 2, klart.
+Delta compression using up to 4 threads.
+Komprimerar objekt: 100% (2/2), klart.
+Skriver objekt: 100% (2/2), 225 bytes | 225.00 KiB/s, klart.
+Total 2 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/jonnyVarn/name_day
+   4f645f0..16ae616  main -> main
+   perhaps i missed some stuff..
+   
 """
