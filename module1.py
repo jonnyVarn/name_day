@@ -259,6 +259,32 @@ namnsdag.service - Namnsdag Service
  added main2 because i created and edited the same files ;) I'm to tired.
  It will be a fun day today.
  
+ git add __main__.py module1.py main2.py
+jw@josefs-MacBookPro:~/name_day$ git commit -m "added comments"
+[main f830fd4] added comments
+ 1 file changed, 21 insertions(+), 10 deletions(-)
+jw@josefs-MacBookPro:~/name_day$ git push
+Username for 'https://github.com': jonnyvarn
+Password for 'https://jonnyvarn@github.com':
+To https://github.com/jonnyVarn/name_day
+ ! [rejected]        main -> main (fetch first)
+error: misslyckades sända vissa referenser till "https://github.com/jonnyVarn/name_day"
+tips: Uppdateringar avvisades då fjärren innehåller ändringar som du inte
+tips: har lokalt. Det beror oftast på att ett annat arkiv har sänt in samma
+tips: referenser. Det kan vara en idé att först integrera fjärrändringarna
+tips: (t.ex. "git pull ...") innan du sänder igen.
+tips: Se avsnittet "Note about fast-forwards" i "git push --help" för detaljer.
+jw@josefs-MacBookPro:~/name_day$ git push -f
+Username for 'https://github.com': jonnyvarn
+Password for 'https://jonnyvarn@github.com':
+Räknar objekt: 32, klart.
+Delta compression using up to 4 threads.
+Komprimerar objekt: 100% (30/30), klart.
+Skriver objekt: 100% (32/32), 7.77 KiB | 1.55 MiB/s, klart.
+Total 32 (delta 12), reused 0 (delta 0)
+remote: Resolving deltas: 100% (12/12), done.
+To https://github.com/jonnyVarn/name_day
+ + 7a1752b...f830fd4 main -> main (forced update)
 
 
 """
