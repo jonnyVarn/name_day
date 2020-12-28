@@ -2,6 +2,7 @@ import requests as RQ
 import json
 from subprocess import Popen as Popen
 from subprocess import check_output as check_output
+from time import sleep
 
 
 class name:
@@ -31,17 +32,42 @@ class name:
     def get_date(self, days_dict):
         date = days_dict.get('datum')
         return date
+    
+    def systemctl_reload(self):
+        Popen(["systemctl" ,"daemon-reload"])
 
     def save_to_file(self, name_day, date):
-        file = open('names.txt', 'a+')
-        file.write(date + " Dagens namn: ")
-        for i in range(len(name_day)):
-            if i != len(name_day)-1:
-                file.write(name_day[i] + ", ")
-        else:
-            file.write(name_day[i] + ".")
-        file.write("\n")
-        print("done writing to file")
+        
+        try:
+            file_test=open('names.txt')
+            test=str(file_test.readlines)
+            print(test)
+
+            if not test.find(date)==-1:
+                file = open('names.txt', 'a+')
+                file.write(date + " Dagens namn: ")
+                for i in range(len(name_day)):
+                    if i != len(name_day)-1:
+                        file.write(name_day[i] + ", ")
+                    else:
+                        file.write(name_day[i] + ".")
+                        file.write("\n")
+                print("done writing to file")
+            else:
+                print("did not write will sleep for a while")
+                sleep(60) 
+        except:
+            print("the file is not ready yet so I guess its ok")
+            file = open('names.txt', 'a+')
+            file.write(date + " Dagens namn: ")
+            for i in range(len(name_day)):
+                if i != len(name_day)-1:
+                    file.write(name_day[i] + ", ")
+                else:
+                    file.write(name_day[i] + ".")
+            file.write("\n")
+            print("done writing to file")
+            
 
     def create_init_script(self):
         file = open('namnsdag.sh', 'w+')
@@ -60,20 +86,27 @@ class name:
         Popen(["cp", "time.sh", "/etc/init.d/namnsdag.sh"])
         Popen(["chmod", "+x", "/etc/init.d/namnsdag.sh"])
 
-    def create_systemd_service(self):
+    def create_namnsdag_sh(self):
+        #this should use the "main2.py"
         # creates a sh file and stuff
         pwd_binary = check_output(["pwd"], shell=True)
         pwd = pwd_binary.decode()
         pwd_str = pwd.strip("\n")
         print(pwd)
-        whole_pwd = pwd_str + "/main.py"
+        whole_pwd = pwd_str + "/main2.py"
         bash_str = "#!/bin/bash"
         file99 = open('namnsdag.sh', 'w+')
         file99.write(f"{bash_str} \n  {whole_pwd}")
         file99.close()
+        Popen(["sudo", "chmod", "+x", "main2.py"])
+
+    def copy_namnsdag_sh(self): 
         Popen(["sudo", "chmod", "+x", "namnsdag.sh"])
         Popen(["cp", "namnsdag.sh", "/usr/bin/namnsdag.sh"])
         Popen(["sudo", "chmod", "+x", "/usr/bin/namnsdag.sh"])
+    
+
+    def create_namnsdag_service(self):
         file1 = open('namnsdag.service', 'w+')
         file1.write("[Unit]\n"
                     "Description=Namnsdag Service \n"
@@ -206,5 +239,15 @@ remote: Resolving deltas: 100% (1/1), completed with 1 local object.
 To https://github.com/jonnyVarn/name_day
    4f645f0..16ae616  main -> main
    perhaps i missed some stuff..
+
+my mind goes in cirkles and so does my code..
+namnsdag.service - Namnsdag Service
+   Loaded: loaded (/etc/systemd/system/namnsdag.service; disabled; vendor preset: enabled)
+   Active: activating (auto-restart) since Mon 2020-12-28 05:57:34 CET; 494ms ago
+  Process: 31070 ExecStart=/usr/bin/namnsdag.sh (code=exited, status=0/SUCCESS)
+ Main PID: 31070 (code=exited, status=0/SUCCESS)
+ added main2 because i created and edited the same files ;) I'm to tired.
+ It will be a fun day today.
+
 
 """
