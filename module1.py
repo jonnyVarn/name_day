@@ -60,7 +60,7 @@ class name:
                 print("done writing to file")
             else:
                 print("did not write will sleep for a while")
-                sleep(60) #could have used more but..this is nothing usefull anyway
+                sleep(3600) #could have used more but..this is nothing usefull anyway
         except:
             #well the file is not there yet so no risk in writing the name again..
             print("the file is not ready yet so I guess its ok")
